@@ -58,7 +58,7 @@ def branch_through_bfs(recipe_url, recipe_class: Type[Recipe], _driver,
         #   If depth > 0:
         #       Get neighbors, add neighbors to queue.
         #   Else do nothing.
-        if depth >= 0:
+        if depth > 0:
             neighbors_urls = set(recipe_obj.get_recipe_neighbors())
             print(f'Neighbor URLs: {neighbors_urls}')
             not_visited_recipe_neighbors = set.difference(neighbors_urls, visited)
@@ -74,6 +74,6 @@ def branch_through_bfs(recipe_url, recipe_class: Type[Recipe], _driver,
 
 
 driver = webdriver.Firefox()
-obj = branch_through_bfs('https://tasty.co/recipe/one-pan-honey-lime-chicken', recipe_class=RecipeTasty,
-                         _driver=driver, depth=8, max_recipes=75)
-print(obj)
+obj = branch_through_bfs('https://tasty.co/compilation/warm-and-cheesy-garlic-breads', recipe_class=RecipeTasty,
+                         _driver=driver, depth=30, max_recipes=500)
+

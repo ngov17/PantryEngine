@@ -28,6 +28,10 @@ class RecipeTasty(Recipe):
         self.ingredients = []
 
     def scrape(self):
+        """
+        TODO: Comments.
+        :return:
+        """
         # Scrape soup into self.html using link.
         self.html = get_soup(self.link, self.driver)
         # Parse info about recipe
@@ -46,7 +50,7 @@ class RecipeTasty(Recipe):
 
     def get_recipes_from_page(self, url=None):
         """
-        # TODO
+        # TODO: Comments.
         :param url:
         :return:
         """
@@ -64,7 +68,7 @@ class RecipeTasty(Recipe):
 
     def get_recipe_neighbors(self):
         """
-        # TODO
+        # TODO: Comments.
         :return:
         """
         soup = self.html
@@ -148,7 +152,7 @@ def _is_url_recipe(url):
     if url is None:
         return False
 
-    return '/recipe/' in url
+    return 'tasty.co/recipe/' in url
 
 
 def _is_url_compilation(url):
@@ -183,6 +187,8 @@ def parse_ingredients(soup: BeautifulSoup):
     :return: Dictionary of ingredients to quantities from soup.
     """
     ingredients_raw = soup.find_all("li", {"class": "ingredient"})
+    # TODO: https://tasty.co/recipe/vegan-jalapeno-cornbread-ring breaks cause of nested
+    #  statement in ingredients for bold part. 
     ingredients = ["".join(ingredient_list.contents) for ingredient_list in ingredients_raw]
     # Construct a dictionary of ingredient -> quantity using both lists
     return ingredients
@@ -200,3 +206,4 @@ def parse_title(soup):
     else:
         to_return = initial[0].contents[0]
     return to_return
+

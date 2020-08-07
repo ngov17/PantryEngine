@@ -4,7 +4,7 @@ from typing import Type
 
 class Recipe:
     """
-    TODO
+    TODO: Comments.
     """
     def __init__(self, link, driver):
         self.link = link
