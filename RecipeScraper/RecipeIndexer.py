@@ -3,9 +3,9 @@ import hashlib
 from HTMLRecipeParser import HTMLRecipeParser
 
 """
-Class that decribes what fields will be added to what indexes in our data model (data_models)
+Class that describes what documents (JSON) will be added to what indexes in our data model (data_models)
 """
-class RecipeInserter:
+class RecipeIndexer:
 
     """
     Takes in exactly the fields we need based on our data model. T
