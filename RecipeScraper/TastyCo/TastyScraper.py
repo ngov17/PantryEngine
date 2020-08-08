@@ -1,9 +1,10 @@
 from bs4 import BeautifulSoup
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from RecipeScraper import Recipe
+from RecipeScraper.TastyCo.TastyParser import parse_tasty_ingredients, parse_tasty_title
 
 URL = 'https://tasty.co/'
 PARSER = 'html5lib'
@@ -35,16 +36,13 @@ class RecipeTasty(Recipe):
         # Scrape soup into self.html using link.
         self.html = get_soup(self.link, self.driver)
         # Parse info about recipe
-        self.ingredients = parse_ingredients(soup=self.html)
-        self.title = parse_title(soup=self.html)
+        self.ingredients = parse_tasty_ingredients(soup=self.html)
+        self.title = parse_tasty_title(soup=self.html)
         self.id = hash(self.title)
         # Write html to local file
         link_suffix = self.link[len(URL):]
         html_file_name = f'{link_suffix.replace("/", "_").lower()}'
         write_html(html_file_name, self.html)
-        # Write JSON
-        path_to_json = make_json_filename(url=self.link, soup=self.html)
-        write_json(path_to_json, self)
         print(f'{self.title} with ingredients:\n{self.ingredients}')
         return self.html
 
@@ -102,10 +100,6 @@ def get_url(url: str):
         return 'https://tasty.co' + url
 
 
-def make_json_filename(url, soup) -> str:
-    pass
-
-
 def write_html(filename, soup):
     """
     Writes html to file.
@@ -135,8 +129,8 @@ def get_soup(url, driver):
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     # Wait until specific elements are available
     try:
-        wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'feed__items')))
-        wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'related-recipes')))
+        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'feed__items')))
+        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'related-recipes')))
     except TimeoutException:
         print(f"Driver timed out on {url}")
     # Create soup object
@@ -164,46 +158,3 @@ def _is_url_compilation(url):
         return False
 
     return '/compilation/' in url
-
-
-def setup_json():
-    """
-    Setup json file for tasty.co
-    :return:
-    """
-    pass
-
-
-def write_json(path, recipe):
-    """
-    Write recipe to json file
-    :return:
-    """
-    pass
-
-
-def parse_ingredients(soup: BeautifulSoup):
-    """
-    :return: Dictionary of ingredients to quantities from soup.
-    """
-    ingredients_raw = soup.find_all("li", {"class": "ingredient"})
-    # TODO: https://tasty.co/recipe/vegan-jalapeno-cornbread-ring breaks cause of nested
-    #  statement in ingredients for bold part. 
-    ingredients = ["".join(ingredient_list.contents) for ingredient_list in ingredients_raw]
-    # Construct a dictionary of ingredient -> quantity using both lists
-    return ingredients
-
-
-def parse_title(soup):
-    """
-    :param soup: Soup of web page.
-    :return: String of title of recipe from soup.
-    """
-
-    initial = soup.find_all("h1", {"class": "recipe-name"})
-    if len(initial) == 0:
-        to_return = "No title"
-    else:
-        to_return = initial[0].contents[0]
-    return to_return
-
