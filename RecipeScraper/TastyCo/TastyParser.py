@@ -12,7 +12,7 @@ class TastyParser(HTMLRecipeParser):
         return soup.prettify()
 
     def parse_url_host(self):
-        pass
+        return "https://tasty.co/"
 
     def parse_url(self):
         return self.url
