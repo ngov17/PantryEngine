@@ -3,8 +3,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
-from RecipeScraper import Recipe
-from RecipeScraper.TastyCo.TastyParser import parse_tasty_ingredients, parse_tasty_title
+from RecipeScraper.Recipe import Recipe
+from TastyCo.TastyParser import TastyParser, parse_tasty_title, parse_tasty_ingredients
+from RecipeScraper.RecipeIndexer import RecipeIndexer
 
 URL = 'https://tasty.co/'
 PARSER = 'html5lib'
@@ -35,14 +36,20 @@ class RecipeTasty(Recipe):
         """
         # Scrape soup into self.html using link.
         self.html = get_soup(self.link, self.driver)
-        # Parse info about recipe
+        # we parse and index each recipe as it is scraped in function scrape()
+        # so we create instances of our parser
+        link = URL + self.link[len(URL):]
+        parser = TastyParser(self.html, link)
+        # NOTE: we don't need this part as all TastyParser needs is the html file (as soup)
+        # # Parse info about recipe
         self.ingredients = parse_tasty_ingredients(soup=self.html)
         self.title = parse_tasty_title(soup=self.html)
-        self.id = hash(self.title)
-        # Write html to local file
-        link_suffix = self.link[len(URL):]
-        html_file_name = f'{link_suffix.replace("/", "_").lower()}'
-        write_html(html_file_name, self.html)
+        # self.id = hash(self.title)
+        # # Write html to local file
+        # html_file_name = f'{link_suffix.replace("/", "_").lower()}'
+        # write_html(html_file_name, self.html)
+        # call our indexer whose init method indexes this particular html page based on parser
+        RecipeIndexer(parser)
         print(f'{self.title} with ingredients:\n{self.ingredients}')
         return self.html
 

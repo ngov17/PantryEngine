@@ -1,4 +1,4 @@
-from RecipeScraper import HTMLRecipeParser
+from RecipeScraper.HTMLRecipeParser import HTMLRecipeParser
 from bs4 import BeautifulSoup
 
 
@@ -21,7 +21,7 @@ class TastyParser(HTMLRecipeParser):
         soup: BeautifulSoup = self.html
         return parse_tasty_title(soup)
 
-    def parse_ingredient(self):
+    def parse_ingredients(self):
         soup: BeautifulSoup = self.html
         return parse_tasty_ingredients(soup)
 
@@ -50,3 +50,4 @@ def parse_tasty_title(soup):
     else:
         to_return = initial[0].contents[0]
     return to_return
+
