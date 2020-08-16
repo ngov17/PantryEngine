@@ -2,6 +2,13 @@
   text-align: center;
 }
 
+.logo-subtext-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: auto;
+}
+
 .big_text {
   color: black;
   font-family: Roboto-Medium, sans-serif;

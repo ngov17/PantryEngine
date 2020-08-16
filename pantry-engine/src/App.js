@@ -3,16 +3,19 @@ import './App.css';
 import NavbarPantry from "./NavbarPantry/NavbarPantry";
 import SearchPantry from "./SearchPantry/SearchPantry";
 import Container from "react-bootstrap/cjs/Container";
-import SearchTemplate from "./SearchTemplate/SearchTemplate";
 import Logo from "./Logo/Logo";
 import TestCardWrapper from "./TestCardWrapper/TestCardWrapper";
+import Subtext from "./Subtext/Subtext";
 
 function App() {
   return (
     <div className="App">
       <Container className='w-50'>
           <NavbarPantry/>
-          <Logo className='mb-4'/>
+          <div className={'logo-subtext-container'}>
+              <Logo className='mb-4'/>
+              <Subtext query={'A search engine for food.'}/>
+          </div>
       <div className={'col-md-12 mx-auto'}>
           <SearchPantry/>
           {/*TODO: Wrap the below 4 components into one bigger component, that gets re-rendered as list of cards. */}

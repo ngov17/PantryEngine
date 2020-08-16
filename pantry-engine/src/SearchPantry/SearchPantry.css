@@ -1,19 +1,22 @@
 .searchbar {
     padding: 5px;
+
 }
 
-
+.search_input::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
 
 .search_input {
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
-    border-top: navajowhite;
-    border-left: navajowhite;
-    border-right: navajowhite;
-    border-color: rgba(0, 0, 0, 0.8);
+    border-top: transparent;
+    border-left: transparent;
+    border-right: transparent;
     padding-left: 10px;
     width: 55%;
     height: 45px;
+    vertical-align: middle;
 }
 
 .search_button {
@@ -21,13 +24,14 @@
     background-color: rgba(100, 100, 100, 0.3);
     border-bottom-right-radius: 6px;
     border-top-right-radius: 6px;
-    height: 45px;
+    height: 44px;
     width: 15%;
     border: none;
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+    vertical-align: middle;
 }
 
 .search_button:hover {
-    background-color: gray; /* Green */
+    background-color: gray;
     color: white;
 }
