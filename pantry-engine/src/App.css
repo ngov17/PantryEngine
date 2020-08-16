@@ -2,6 +2,13 @@
   text-align: center;
 }
 
+.big_text {
+  color: black;
+  font-family: Roboto-Medium, sans-serif;
+  padding: 10px;
+  font-size: 35px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
