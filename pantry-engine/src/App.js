@@ -10,7 +10,6 @@ import Subtext from "./Subtext/Subtext";
 function App() {
   return (
     <div className="App">
-      <Container className='w-50'>
           <NavbarPantry/>
           <div className={'logo-subtext-container'}>
               <Logo className='mb-4'/>
@@ -24,7 +23,6 @@ function App() {
           <SearchPantry query={"sweet potatoes, cucumber, carrots, lemon"} disabled={true}/>
           <SearchPantry query={"kale, onions, pasta, paprika, flour"} disabled={true}/>
       </div>
-      </Container>
     </div>
   );
 }
