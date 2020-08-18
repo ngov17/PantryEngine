@@ -5,13 +5,18 @@ import Form from "react-bootstrap/Form"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from "react-bootstrap/Button";
 import './SearchPantry.css';
+import SearchContainer from "../SearchContainer/SearchContainer";
+
 class SearchPantry extends React.Component {
 
-    state = {
-        value: "",
-        placeholder_default:  "Enter your ingredients!",
-        disabled: false,
-        queryResult: []
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: "",
+            placeholder_default:  "Enter your ingredients!",
+            disabled: false,
+            result: []
+        }
     }
 
 
@@ -19,9 +24,8 @@ class SearchPantry extends React.Component {
         let url = "http://localhost:3001?q=" + qry
         fetch(url)
             .then(res => res.json())
-            .then(res => this.setState({queryResult: res
+            .then(res => this.setState({result: res
                 }))
-        this.props.callback(this.state.queryResult)
     }
 
     handleSubmit = (e) => {
@@ -76,6 +80,8 @@ class SearchPantry extends React.Component {
                             className={'search_button'}
                             onClick={this.handleSubmit}>Search</button>
                 </div>
+                <SearchContainer result={this.state.result}/>
+
             </div>
         )
     }

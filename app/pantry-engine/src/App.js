@@ -16,7 +16,7 @@ function App() {
               <Logo className='mb-4'/>
               <Subtext query={'A search engine for food.'}/>
           </div>
-        <SearchContainer/>
+        <SearchPantry/>
     </div>
   );
 }
