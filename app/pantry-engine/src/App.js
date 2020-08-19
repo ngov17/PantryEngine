@@ -7,6 +7,7 @@ import Logo from "./Logo/Logo";
 import TestCardWrapper from "./TestCardWrapper/TestCardWrapper";
 import Subtext from "./Subtext/Subtext";
 import SearchContainer from "./SearchContainer/SearchContainer";
+import RecipeCard from "./RecipeCard/RecipeCard";
 
 function App() {
   return (
@@ -16,7 +17,19 @@ function App() {
               <Logo className='mb-4'/>
               <Subtext query={'A search engine for food.'}/>
           </div>
-        <SearchPantry/>
+        {/*<SearchPantry/>*/}
+        <RecipeCard recipe_title={"Lorem Ipsum with a bunch of other stuff"}
+                    recipe_url={'https://github.com/'}
+                    recipe_img={'https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2018/12/Shakshuka-19.jpg'}
+                    ingredients={['4x eggs', '3 tomatoes', 'peppers', 'onions']}/>
+        <RecipeCard recipe_title={"Lorem Ipsum with a bunch of other stuff"}
+                    recipe_url={'https://github.com/'}
+                    recipe_img={'https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2018/12/Shakshuka-19.jpg'}
+                    ingredients={['4x eggs', '3 tomatoes', 'peppers', 'onions']}/>
+        <RecipeCard recipe_title={"Lorem Ipsum with a bunch of other stuff"}
+                    recipe_url={'https://github.com/'}
+                    recipe_img={'https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2018/12/Shakshuka-19.jpg'}
+                    ingredients={['4x eggs', '3 tomatoes', 'peppers', 'onions']}/>
     </div>
   );
 }

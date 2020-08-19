@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from "react-bootstrap/Button";
 import './SearchPantry.css';
 import SearchContainer from "../SearchContainer/SearchContainer";
+import SearchTemplate from "../SearchTemplate/SearchTemplate";
 
 class SearchPantry extends React.Component {
 
@@ -14,8 +15,8 @@ class SearchPantry extends React.Component {
         this.state = {
             value: "",
             placeholder_default:  "Enter your ingredients!",
-            disabled: false,
-            result: []
+            result: [],
+            queried: false
         }
     }
 
@@ -29,6 +30,7 @@ class SearchPantry extends React.Component {
     }
 
     handleSubmit = (e) => {
+        this.setState({queried: true})
         const query = this.props.query || this.state.value ;
         //const values = query.split(" ");
         //alert('Query: ' + query)
@@ -46,27 +48,29 @@ class SearchPantry extends React.Component {
 
     handleKeyDown = (e) => {
         if (e.keyCode === 13) {
-            alert('enter clicked');
             this.handleSubmit(e)
         }
     }
 
+    getContainerContents() {
+
+        if (this.state.queried) {
+            return (
+                <SearchContainer result={this.result}/>
+            )
+        } else {
+            return (
+                <>
+                    <SearchTemplate disabled={true} buttonClick={this.handleSubmit} value={'tomatoes, garlic, chicken, olives'}/>
+                    <SearchTemplate disabled={true} buttonClick={this.handleSubmit} value={'broccoli, asparagus, beef, chicken, a potato, toast'}/>
+                    <SearchTemplate disabled={true} buttonClick={this.handleSubmit} value={'flour, leftover rice, carrots'}/>
+                </>)
+        }
+
+
+    }
+
     render() {
-        return(
-            //TODO: Turn to non-bootstrap.
-            this.newSearch()
-        )
-    }
-
-    getPlaceholder = () => {
-        return this.props.query || this.state.placeholder_default;
-    }
-
-
-
-
-
-    newSearch() {
         return (
             <div>
                 <div className={'searchbar'}>
@@ -74,33 +78,20 @@ class SearchPantry extends React.Component {
                            className={'search_input'}
                            onChange={this.onTextChanged}
                            onKeyDown={this.handleKeyDown}
-                           disabled={this.props.disabled}
                            placeholder={this.getPlaceholder()}/>
                     <button type={'submit'}
                             className={'search_button'}
                             onClick={this.handleSubmit}>Search</button>
                 </div>
-                <SearchContainer result={this.state.result}/>
-
+                {this.getContainerContents()}
             </div>
+
+
         )
     }
 
-    bootstrapSearch() {
-        return (
-            <div className={'searchbar'}>
-                <InputGroup className={'mb-2'} onChange={this.onTextChanged} onKeyDown={this.handleKeyDown}>
-                    <FormControl
-                        placeholder={this.getPlaceholder}
-                        aria-label="Ingredient list"
-                        disabled={this.props.disabled}
-                    />
-                    <InputGroup.Append>
-                        <Button type={'submit'} value={'Search!'} onClick={this.handleSubmit} >Search!</Button>
-                    </InputGroup.Append>
-                </InputGroup>
-            </div>
-        )
+    getPlaceholder = () => {
+        return this.props.query || this.state.placeholder_default;
     }
 }
 

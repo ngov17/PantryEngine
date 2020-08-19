@@ -73,7 +73,8 @@ def branch_through_bfs(recipe_url, recipe_class: Type[Recipe], _driver,
     return all_recipe_objects
 
 
-driver = webdriver.Chrome('/Users/nishant/Downloads/chromedriver')
+# driver = webdriver.Chrome('/Users/nishant/Downloads/chromedriver')
+driver = webdriver.Firefox()
 obj = branch_through_bfs('https://tasty.co/compilation/warm-and-cheesy-garlic-breads', recipe_class=RecipeTasty,
                          _driver=driver, depth=30, max_recipes=199)
 
