@@ -19,8 +19,8 @@ query = {
 }
 
 # Uncomment below lines if data needs to be deleted  in order to re run scraper, parser
-# print(es.indices.delete("recipe_index"))
-# print(es.indices.delete("url_index"))
+print(es.indices.delete("recipe_index"))
+print(es.indices.delete("url_index"))
 
 result = es.search(query, "recipe_index")
 all_hits = result['hits']['hits']

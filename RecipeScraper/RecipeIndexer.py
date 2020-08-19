@@ -1,6 +1,7 @@
 from elasticsearch import Elasticsearch
 from HTMLRecipeParser import HTMLRecipeParser
 
+
 class RecipeIndexer:
     """
     Class that outlines how the parsed data is organized and indexed based on our data model
@@ -66,7 +67,7 @@ class RecipeIndexer:
             "query": {
                 "match": {
                     "url": {
-                        "query":  self.url
+                        "query": self.url
                     }
                 }
             }

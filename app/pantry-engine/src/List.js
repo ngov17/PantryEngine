@@ -10,6 +10,7 @@ const List = (props) => {
                     <li className='list'>
                         <span className='repo-text'>{repo} </span>
                     </li>
+                    
                 );
             })}
         </ul>

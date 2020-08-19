@@ -7,6 +7,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+input[type="text"]:disabled {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+
+input[type="text"]:disabled::placeholder {
+  color: white;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

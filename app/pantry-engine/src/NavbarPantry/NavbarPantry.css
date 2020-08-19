@@ -1,8 +1,9 @@
 .navbar {
-    background-color: black;
+    background-color: #363636;
     height: 6vh;
     display: flex;
     flex-direction: row;
+    box-shadow: 5px 5px 5px;
 }
 
 .navbar-item {
