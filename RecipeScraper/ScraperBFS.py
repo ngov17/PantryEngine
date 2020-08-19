@@ -1,7 +1,7 @@
 import time
 from typing import Type
 from Recipe import Recipe
-from TastyScraper import RecipeTasty
+from TastyCo.TastyScraper import RecipeTasty
 from selenium import webdriver
 
 
@@ -73,7 +73,7 @@ def branch_through_bfs(recipe_url, recipe_class: Type[Recipe], _driver,
     return all_recipe_objects
 
 
-driver = webdriver.Firefox()
+driver = webdriver.Chrome('/Users/nishant/Downloads/chromedriver')
 obj = branch_through_bfs('https://tasty.co/compilation/warm-and-cheesy-garlic-breads', recipe_class=RecipeTasty,
-                         _driver=driver, depth=30, max_recipes=500)
+                         _driver=driver, depth=30, max_recipes=199)
 

@@ -1,14 +1,20 @@
 from abc import ABC, abstractmethod
 from typing import Type
-impor
+from bs4 import BeautifulSoup
+
 
 class HTMLRecipeParser:
-
     """
     The constructor takes in a html file as string
     """
-    def __init__(self, html):
+
+    def __init__(self, html: BeautifulSoup, url):
+        """
+
+        :param html: BeautifulSoup object of webpage
+        """
         self.html = html
+        self.url = url
 
     @abstractmethod
     def parse_html_string(self):
@@ -18,7 +24,7 @@ class HTMLRecipeParser:
         pass
 
     @abstractmethod
-    def parse_URL_host(self):
+    def parse_url_host(self):
         """
         :return the URL host. This is important as its unique and will represent the website
          id that represents each page for efficient parsing management if any changes occur
@@ -26,7 +32,7 @@ class HTMLRecipeParser:
         pass
 
     @abstractmethod
-    def parse_URL(self):
+    def parse_url(self):
         """
         :return the title from html
         """
