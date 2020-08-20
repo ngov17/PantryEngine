@@ -8,7 +8,7 @@ class CardIngredientList extends React.Component {
             <div>
             {
                 this.props.ingredients.map((item, index) => (
-                    <IngredientItem name={item}/>
+                    <IngredientItem available={this.props.available} name={item}/>
                 ))
             }
                 {console.log(this.props.ingredients)}
@@ -27,10 +27,19 @@ class CardIngredientList extends React.Component {
 }
 
 class IngredientItem extends React.Component {
+    getAvailable = () => {
+        if (this.props.available) {
+            return 'ingredient-available';
+        }   else {
+            return 'ingredient-unavailable';
+        }
+    }
+
+
     render() {
         return(
-            <div className={'ingredient-item'}>
-                <p>{this.props.name}</p>
+            <div className={'ingredient-item ' + this.getAvailable()}>
+                {this.props.name}
             </div>
         )
     }

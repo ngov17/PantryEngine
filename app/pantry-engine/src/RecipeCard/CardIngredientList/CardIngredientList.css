@@ -1,4 +1,20 @@
 .ingredient-item {
     color: black;
-    font-family: Roboto-Medium;
+    font-family: Roboto-Medium, sans-serif;
+    font-weight: lighter;
+    padding-top: 10px;
+    border-bottom: white;
+}
+
+.ingredient-available {
+    color: green;
+    display: flex;
+    border-bottom: white;
+}
+
+
+
+.ingredient-unavailable {
+    color: red;
+    display: flex;
 }
