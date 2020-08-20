@@ -10,18 +10,23 @@ class RecipeCard extends React.Component {
 
     render() {
         return(
-            <div className={'item-padder'}>
+            <div className={'recipe-item'}>
                 <div className={'recipe-card'} onClick={this.handleClickCard}>
                     <div className={'recipe-card-img'}>
                         <img className={'recipe-img'} src={this.props.recipe_img}/>
-                    </div>
-                    <div className={'recipe-card-ingredients'}>
-                        <CardIngredientList ingredients={this.props.ingredients}/>
                     </div>
                     <div className={'recipe-card-footbar'}>
                         <a className={'recipe-card-title recipe-card-link'} href={this.props.recipe_url}>
                             {this.props.recipe_title}
                         </a>
+                    </div>
+                </div>
+                <div className={'ingredients'}>
+                    <div className={'card-available-ingredients'}>
+                        <CardIngredientList available={true} ingredients={this.props.available_ingredients}/>
+                    </div>
+                    <div className={'card-unavailable-ingredients'}>
+                        <CardIngredientList available={false} ingredients={this.props.unavailable_ingredients}/>
                     </div>
                 </div>
             </div>
