@@ -1,11 +1,17 @@
 import time
 from typing import Type
-from Recipe import Recipe
-from TastyCo.TastyScraper import RecipeTasty
+from RecipeScraper import RecipeScraper
 from selenium import webdriver
+from elasticsearch import Elasticsearch
+# import our scrapers
+from TastyCo.TastyScraper import TastyScraper
+from FoodNetwork.FoodNetworkScraper import FoodNetworkScraper
+"""
+method that implements our scraper via bfs
+"""
 
 
-def branch_through_bfs(recipe_url, recipe_class: Type[Recipe], _driver,
+def branch_through_bfs(recipe_url, recipe_class: Type[RecipeScraper], _driver,
                        depth=5, max_recipes=25):
     """
     Starts at a recipe URL, and runs breadth-first-search on all the recipe URLs on the initial recipe's pages.
@@ -28,7 +34,7 @@ def branch_through_bfs(recipe_url, recipe_class: Type[Recipe], _driver,
 
     # Get set of neighbors of recipe_URL and the URL itself.
     recipe_obj = recipe_class(link=recipe_url, driver=_driver)
-    recipe_obj.scrape()
+    # recipe_obj.scrape()
     neighbors = set(recipe_obj.get_recipes_from_page())  # Returns set of URL strings
     # Get unvisited neighbors. Put into queue
     unvisited = set.difference(neighbors, visited)
@@ -73,8 +79,67 @@ def branch_through_bfs(recipe_url, recipe_class: Type[Recipe], _driver,
     return all_recipe_objects
 
 
-# driver = webdriver.Chrome('/Users/nishant/Downloads/chromedriver')
-driver = webdriver.Firefox()
-obj = branch_through_bfs('https://tasty.co/compilation/warm-and-cheesy-garlic-breads', recipe_class=RecipeTasty,
-                         _driver=driver, depth=30, max_recipes=199)
+# define our elastic search instance
+es = Elasticsearch([
+    {'host': 'localhost', 'port': 9200}
+])
+
+"""
+ conf that customizes elastic's analyzer that configures how we want the ingredients in the recipe_index 
+ to be tokenized, filtered, and normalized. Similarly, one for url_index
+"""
+recipe_index_conf = {
+    "settings": {
+        "analysis": {
+            "analyzer": {
+                "analyzer_ingredients": {
+                    "type": "custom",
+                    "tokenizer": "lowercase",
+                    "filter": [
+                        "stemmer",
+                        "word_delimiter"
+                    ]
+                }
+            }
+        }
+    },
+    "mappings": {
+        "properties": {
+            "ingredients": {
+                "type": "text",
+                "analyzer": "analyzer_ingredients"
+            }
+        }
+    }
+}
+
+url_index_conf = {
+    "mappings": {
+        "properties": {
+            "url": {
+                "type": "keyword"
+            }
+        }
+    }
+
+}
+
+# # Create our indices: url_index and recipe_index. Log to console to ensure success.
+# print(es.indices.create("url_index", url_index_conf))
+# print(es.indices.create("recipe_index", recipe_index_conf))
+
+# define our drivers (specific to console)
+driver = webdriver.Chrome('/Users/nishant/Downloads/chromedriver')
+# driver2 = webdriver.Chrome('/Users/nishant/Downloads/chromedriver')
+# driver = webdriver.Firefox()
+# 'https://tasty.co/compilation/warm-and-cheesy-garlic-breads'
+# 'https://tasty.co/recipe/one-whole-chicken-three-different-meals'
+# 'https://www.foodnetwork.com/recipes/food-network-kitchen/sweet-and-sour-glazed-shrimp-5288799'
+branch_through_bfs('https://www.foodnetwork.com/recipes/food-network-kitchen/the-best-chicken-and-rice-8133711',
+                   recipe_class=FoodNetworkScraper, _driver=driver, depth=499, max_recipes=2)
+# branch_through_bfs('https://tasty.co/recipe/one-whole-chicken-three-different-meals',
+#                    recipe_class=TastyScraper, _driver=driver, depth=499, max_recipes=3)
+# print("MOVING ON TO low carb meals ")
+# branch_through_bfs('https://tasty.co/topic/baked-goods', recipe_class=RecipeTasty,
+#                    _driver=driver, depth=499, max_recipes=999)
 

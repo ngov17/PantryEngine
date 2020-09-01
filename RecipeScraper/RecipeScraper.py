@@ -2,16 +2,18 @@ from abc import ABC, abstractmethod
 from typing import Type
 
 
-class Recipe:
+class RecipeScraper(ABC):
     """
     TODO: Comments.
     """
-    def __init__(self, link, driver):
-        self.link = link
+    def __init__(self, driver):
         self.driver = driver
 
     @abstractmethod
     def scrape(self):
+        """
+        :return: html object (BeautifulSoup Object)
+        """
         pass
 
     @abstractmethod

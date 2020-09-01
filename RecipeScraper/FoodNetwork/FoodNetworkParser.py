@@ -1,26 +1,27 @@
 from HTMLRecipeParser import HTMLRecipeParser
 from bs4 import BeautifulSoup
 import json
+import re
 
 
-class TastyParser(HTMLRecipeParser):
+class FoodNetworkParser(HTMLRecipeParser):
 
     def __init__(self, html: BeautifulSoup, url: str):
-        super(TastyParser, self).__init__(html, url)
+        super(FoodNetworkParser, self).__init__(html, url)
 
     def parse_html_string(self):
         return self.html.prettify()
 
     def parse_url_host(self):
-        return "https://tasty.co/"
+        return "https://www.foodnetwork.com/"
 
     def parse_url(self):
         return self.url
 
     def parse_image_url(self):
-        image_url = self.html.find("meta", property="og:image")
+        image_url = self.html.find_all("img", {"class": "m-MediaBlock__a-Image a-Image"})
         if image_url:
-            return image_url["content"]
+            return image_url[0]["src"]
         else:
             # this is a default image
             return "https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2018/12/Shakshuka-19.jpg"
@@ -30,63 +31,64 @@ class TastyParser(HTMLRecipeParser):
         :param soup: Soup of web page.
         :return: String of title of recipe from soup.
         """
-        initial = self.html.find_all("h1", {"class": "recipe-name"})
-        if len(initial) == 0:
+        title = self.html.find_all("title")
+        if title:
+            return title[0].contents[0].split(" | ")[0]
+        else:
             # set our success variable to False
             self.success = False
             # note: None gets converted to null in JSON and hence Elasticsearch
             return None
-        else:
-            to_return = initial[0].contents[0]
-            return to_return
 
     def parse_ingredients(self):
         """
-        :return: Dictionary of ingredients to quantities from soup.
+        :return: list of ingredients
         """
-        ingredients_raw = self.html.find_all("li", {"class": "ingredient"})
-        print(ingredients_raw)
+        ingredients_raw = self.html.find_all("p", {"class": "o-Ingredients__a-Ingredient"})
         if ingredients_raw:
             ingredients = []
-            for ingredient_list in ingredients_raw:
-                if not ingredient_list.find("span"):
-                    ingredients.append("".join(ingredient_list.contents))
-            if len(ingredients) == 0:
-                self.success = False
-                return None
-            else:
-                return ingredients
+            for ingredient in ingredients_raw:
+                # use the regex module to remove '\xao' etc
+                ingredient = re.sub('[^A-Za-z0-9]+', ' ', ingredient.contents[0])
+                ingredient = ingredient.rstrip()
+                ingredients.append(ingredient)
+            return ingredients
         else:
-            # set our success variable to failure and return an empty list
+            # set our success variable to failure and return NONE
             self.success = False
             return None
 
     def parse_steps(self):
         # initialize our steps array
         steps = []
-        contents_list = self.html.find_all("script", {"type": "application/ld+json"})
+        contents_list = self.html.find_all("li", {"class": "o-Method__m-Step"})
         if contents_list:
-            steps_list = json.loads(str(contents_list[0].contents[0]))
-            if "recipeInstructions" in steps_list:
-                for step in steps_list["recipeInstructions"]:
-                    steps.append(step["text"])
-                return steps
-            else:
-                self.success = False
-                return None
+            for step in contents_list:
+                # deal with escape sequences (\n, \xao etc)
+                escapes = ''.join([chr(char) for char in range(1, 32)])  # makes a list of all escape sequences
+                translator = str.maketrans('', '', escapes)  # configures the translator to remove escape sequences
+                step = step.contents[0].translate(translator)
+                # we use strip to remove trailing and leading whitespaces
+                step = step.lstrip()
+                step = step.rstrip()
+                steps.append(step)
+            return steps
         else:
             self.success = False
             return None
 
     def parse_agg_rating(self):
         rating: float
-        contents_list = self.html.find_all("script", {"type": "application/ld+json"})
-        if contents_list:
-            rating_list = json.loads(str(contents_list[0].contents[0]))
-            if "aggregateRating" in rating_list:
-                rating = int(rating_list["aggregateRating"]["ratingValue"])
-                return rating/20.0
-            else:
+        contents_rating = self.html.find("span", {"class": "gig-rating-stars"})
+        print(contents_rating['title'].split(" "))
+        if contents_rating:
+            try:
+                # Convert the string into a float
+                rating = float(contents_rating["title"].split(" ")[0])
+                return rating
+            except ValueError:
+                # in this case theres a parsing error so we just return NONE and move on to the next recipe page
+                print("PARSE INT EXCEPTION")
                 return None
         else:
             return None

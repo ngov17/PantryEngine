@@ -4,24 +4,22 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from RecipeScraper import RecipeScraper
-from TastyCo.TastyParser import TastyParser
+from FoodNetwork.FoodNetworkParser import FoodNetworkParser
 from RecipeIndexer import RecipeIndexer
 
-URL = 'https://tasty.co/'
+URL = 'https://foodnetwork.com/'
 PARSER = 'html5lib'
 DELAY = 10
-HTML_FOLDER_PATH = './TastyHTML/'
 
 
-class TastyScraper(RecipeScraper):
+class FoodNetworkScraper(RecipeScraper):
     """
-    Recipe subclass for tasty.co
+    Recipe subclass for foodnetwork.com
     """
 
     def __init__(self, link, driver):
-        super(TastyScraper, self).__init__(driver)
-        # initialize the link variable as required:
-        self.link = URL + link[len(URL):]
+        super(FoodNetworkScraper, self).__init__(driver)
+        self.link = link
         self.title: str
         self.title = None
         self.html: BeautifulSoup
@@ -40,20 +38,15 @@ class TastyScraper(RecipeScraper):
         self.html = get_soup(self.link, self.driver)
         # we parse and index each recipe as it is scraped in function scrape()
         # so we create instances of our parser
-        link = URL + self.link[len(URL):]
-        parser = TastyParser(self.html, link)
-        # NOTE: we don't need this part as all TastyParser needs is the html file (as soup)
-        # # Parse info about recipe
-        self.ingredients = parser.parse_ingredients()
-        self.title = parser.parse_title()
-        # self.id = hash(self.title)
-        # # Write html to local file
-        # html_file_name = f'{link_suffix.replace("/", "_").lower()}'
-        # write_html(html_file_name, self.html)
+        parser = FoodNetworkParser(self.html, self.link)
         # call our indexer whose init method indexes this particular html page based on parser
         # this essentially fills in the data into elastic search for this page
         # RecipeIndexer(parser)
-        print(f'{self.title} with ingredients:\n{self.ingredients}')
+        print(parser.parse_image_url())
+        print(parser.parse_title())
+        print(parser.parse_ingredients())
+        print(parser.parse_steps())
+        print(parser.parse_agg_rating())
         return self.html
 
     def get_recipes_from_page(self, url=None):
@@ -63,7 +56,7 @@ class TastyScraper(RecipeScraper):
         :return:
         """
         if url is not None:
-            soup = get_soup(url, driver=self.driver)
+            soup = get_soup(('https://' + url.replace('//', '')), driver=self.driver)
         elif self.html is None:
             self.scrape()
             soup = self.html
@@ -71,7 +64,8 @@ class TastyScraper(RecipeScraper):
             soup = self.html
 
         all_urls = [attribute.get('href') for attribute in soup.find_all("a")]
-        recipe_urls = [url for url in all_urls if _is_url_recipe(url)]
+        recipe_urls = [('https://' + url.replace('//', '')) for url in all_urls if _is_url_recipe(url)]
+        print(recipe_urls)
         return recipe_urls
 
     def get_recipe_neighbors(self):
@@ -82,8 +76,8 @@ class TastyScraper(RecipeScraper):
         soup = self.html
         # Scrape class=recipe
         #   class = result__image-link href
-        cards = soup.find_all("a", href=True)
-        links = [a.get('href') for a in cards]
+        links = [attribute.get('href') for attribute in soup.find_all("a")]
+        print(links)
         to_return = []
         recipes = self.get_recipes_from_page()
         to_return.extend(recipes)
@@ -92,22 +86,11 @@ class TastyScraper(RecipeScraper):
         for link in links:
             # If it's not recipe, we scrape all of it for recipes.
             if _is_url_compilation(link):
-                compilation_url = get_url(link)
-                recipes_from_compilation = self.get_recipes_from_page(url=compilation_url)
+                recipes_from_compilation = self.get_recipes_from_page(url=link)
                 to_return.extend(recipes_from_compilation)
+        print(to_return)
         return to_return
 
-
-def get_url(url: str):
-    """
-    Gets actual url string from an href. Mostly to be used to get compilation URL from href.
-    :param url: href value
-    :return: url from value.
-    """
-    if 'tasty.co' in url:
-        return url
-    else:
-        return 'https://tasty.co' + url
 
 def get_soup(url, driver):
     """
@@ -124,10 +107,17 @@ def get_soup(url, driver):
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     # Wait until specific elements are available
     try:
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'feed__items')))
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'related-recipes')))
+        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'recipePage')))
+        # Wait Until the ratings are ready to be parsed
+        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'gig-rating-star gig-rating-star-full')))
+        print("SUCCESS")
     except TimeoutException:
-        print(f"Driver timed out on {url}")
+        try:
+            wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'photoGalleryPage')))
+            print("SUCCESS")
+        except TimeoutException:
+            print(f"Driver timed out on {url}")
+            pass
     # Create soup object
     soup = BeautifulSoup(driver.page_source, features=PARSER)
     return soup
@@ -141,7 +131,8 @@ def _is_url_recipe(url):
     if url is None:
         return False
 
-    return 'tasty.co/recipe/' in url
+    return ('foodnetwork.com/recipes' in url) and ('Print' not in url) \
+           and ('photo' not in url) and ('facebook' not in url)
 
 
 def _is_url_compilation(url):
@@ -152,4 +143,4 @@ def _is_url_compilation(url):
     if url is None:
         return False
 
-    return '/compilation/' in url
+    return 'foodnetwork.com/recipes/photos/' in url
