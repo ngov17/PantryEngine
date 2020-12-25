@@ -1,7 +1,6 @@
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
 import * as React from "react";
 import './NavbarPantry.css';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 class NavbarPantry extends React.Component {
     render() {
@@ -14,15 +13,16 @@ class NavbarPantry extends React.Component {
         return (
             <div className={'navbar'}>
                 <div className={'about navbar-item'} onClick={this.handleAboutRedirect}>
-                    <a className={'navbar-text'} href={'#about'}>About</a>
+                    <a className={'navbar-text'} href={'#about'}><Link style={{color:'#ffffff'}} to={'/about'}>About</Link></a>
                 </div>
 
                 <div className={'search navbar-item'} onClick={this.handleHomeRedirect}>
-                    <a className={'navbar-text'} href={'#home'}>Search</a>
+                    <a className={'navbar-text'} href={'#home'}><Link style={{color:'#ffffff'}} to={'/'}>Search</Link></a>
                 </div>
 
                 <div className={'github navbar-item'} onClick={this.handleGithubRedirect}>
-                    <a className={'navbar-text'} href={'https://github.com/Sami-BG/recipe-browser'}>Github</a>
+                    <h3 className={'navbar-text'} href={'https://github.com/Sami-BG/recipe-browser'}><Link style={{color:'#ffffff'}}
+                                                                                                           to={''}>Github</Link></h3>
                 </div>
 
             </div>
@@ -34,11 +34,11 @@ class NavbarPantry extends React.Component {
     }
 
     handleHomeRedirect = () => {
-        window.location.href = '#home';
+        window.location.href = '#';
     }
 
     handleGithubRedirect = () => {
-        window.location.href = 'https://github.com/Sami-BG/recipe-browser';
+        window.open('https://github.com/Sami-BG/recipe-browser');
     }
 
 

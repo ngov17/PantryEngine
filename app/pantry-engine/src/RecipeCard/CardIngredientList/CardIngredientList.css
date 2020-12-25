@@ -10,6 +10,7 @@
     color: green;
     display: flex;
     border-bottom: white;
+    text-align: left;
 }
 
 
@@ -17,4 +18,12 @@
 .ingredient-unavailable {
     color: red;
     display: flex;
+    text-align: left;
+}
+
+.scroller {
+    margin: 0 auto;
+    height: 300px;
+    width: 300px;
+    overflow: auto;
 }

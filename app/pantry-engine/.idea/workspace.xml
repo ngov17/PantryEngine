@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="24f3192f-4219-4099-a4b0-304b1415b59d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/About/images/Elasticsearch_logo.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/About/images/Node.js_logo.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/About/images/React-icon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/About/images/brown-logo@logotyp.us.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/About/images/python.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../RecipeScraper/HTMLRecipeParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../RecipeScraper/HTMLRecipeParser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../RecipeScraper/RecipeIndexer.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../RecipeScraper/RecipeIndexer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../RecipeScraper/RecipeScraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../RecipeScraper/RecipeScraper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../RecipeScraper/ScraperBFS.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../RecipeScraper/scraper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../RecipeScraper/data_models.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../RecipeScraper/data_models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NavbarPantry/NavbarPantry.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/NavbarPantry/NavbarPantry.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RecipeCard/CardIngredientList/CardIngredientList.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/RecipeCard/CardIngredientList/CardIngredientList.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RecipeCard/CardIngredientList/CardIngredientList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/RecipeCard/CardIngredientList/CardIngredientList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RecipeCard/RecipeCard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/RecipeCard/RecipeCard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RecipeCard/RecipeCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/RecipeCard/RecipeCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SearchContainer/SearchContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SearchContainer/SearchContainer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SearchPantry/SearchPantry.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SearchPantry/SearchPantry.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/controllers/search_controllers.js" beforeDir="false" afterPath="$PROJECT_DIR$/../server/controllers/search_controllers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../server/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../server/package.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="ProjectId" id="1gCCZm9gf3RnnwVM0JZjD0UQ4wz" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="Settings.JavaScript" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/About/images" />
+      <recent name="$PROJECT_DIR$/src/About" />
+      <recent name="$PROJECT_DIR$/src/RecipeCard/CardIngredientList" />
+      <recent name="$PROJECT_DIR$/src/SearchContainer" />
+      <recent name="$PROJECT_DIR$/src/RecipeCardSlide/images" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="24f3192f-4219-4099-a4b0-304b1415b59d" name="Default Changelist" comment="" />
+      <created>1597609244115</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1597609244115</updated>
+      <workItem from="1597609245467" duration="24008000" />
+      <workItem from="1597711336091" duration="2827000" />
+      <workItem from="1597715147852" duration="2408000" />
+      <workItem from="1597818189880" duration="10082000" />
+      <workItem from="1597950693607" duration="1253000" />
+      <workItem from="1597960127528" duration="12385000" />
+      <workItem from="1598067355715" duration="30628000" />
+      <workItem from="1598466033859" duration="473000" />
+      <workItem from="1599156718501" duration="18739000" />
+      <workItem from="1599238380409" duration="21339000" />
+      <workItem from="1599286671764" duration="7428000" />
+      <workItem from="1599316338272" duration="12632000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="304" y="164" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599417029508">
+      <screen x="0" y="23" width="1680" height="966" />
+    </state>
+    <state x="304" y="164" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1680.966@0.23.1680.966" timestamp="1599417029508" />
+    <state x="766" y="361" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog" timestamp="1599157288513">
+      <screen x="0" y="23" width="3440" height="1348" />
+    </state>
+    <state x="766" y="361" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog/0.23.3440.1348@0.23.3440.1348" timestamp="1599157288513" />
+    <state x="2500" y="450" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1599292179356">
+      <screen x="0" y="23" width="3440" height="1348" />
+    </state>
+    <state x="2500" y="450" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.3440.1348@0.23.3440.1348" timestamp="1599292179356" />
+    <state x="359" y="328" key="SettingsEditor" timestamp="1599244149656">
+      <screen x="0" y="23" width="3440" height="1348" />
+    </state>
+    <state x="359" y="328" key="SettingsEditor/0.23.3440.1348@0.23.3440.1348" timestamp="1599244149656" />
+    <state x="628" y="423" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1599417031798">
+      <screen x="0" y="23" width="1680" height="966" />
+    </state>
+    <state x="628" y="423" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1680.966@0.23.1680.966" timestamp="1599417031798" />
+    <state x="1263" y="328" key="run.anything.popup" timestamp="1599166814889">
+      <screen x="0" y="23" width="3440" height="1348" />
+    </state>
+    <state x="1263" y="328" key="run.anything.popup/0.23.3440.1348@0.23.3440.1348" timestamp="1599166814889" />
+    <state x="1117" y="327" width="670" height="676" key="search.everywhere.popup" timestamp="1599157267764">
+      <screen x="0" y="23" width="3440" height="1348" />
+    </state>
+    <state x="1117" y="327" width="670" height="676" key="search.everywhere.popup/0.23.3440.1348@0.23.3440.1348" timestamp="1599157267764" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/RecipeCardSlide/CardSlide.js</url>
+          <line>295</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/RecipeCardSlide/CardSlide.js</url>
+          <line>298</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

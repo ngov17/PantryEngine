@@ -1,34 +1,50 @@
 from abc import ABC, abstractmethod
-from typing import Type
+from bs4 import BeautifulSoup
+from validator_collection import validators
 
 
 class RecipeScraper(ABC):
     """
     TODO: Comments.
     """
-    def __init__(self, driver):
+    def __init__(self, url,  driver):
         self.driver = driver
+        try:
+            self.url = validators.url(url)
+            self.is_url = True
+        except ValueError as exception:
+            self.url = None
+            self.is_url = False
 
     @abstractmethod
     def scrape(self):
         """
-        :return: html object (BeautifulSoup Object)
+        This method scrapes the recipe: retrieves html using get_html, calls the parser and indexer
+        The html soup object is only extracted only if get_html is not None
+        :return a boolean indicating whether the recipe page has been indexed into elasticsearch
         """
         pass
 
     @abstractmethod
-    def get_recipes_from_page(self, url=None):
+    def get_html(self, driver, url):
         """
-        :return: List of all recipe URLs directly linked to on page.
+        Only gets the HTML soup object from the page if is_recipe_url and is_url are true
+        :return: the beautiful soup html object of the page ONLY if is_recipe(url) and is_url are true
+                 If this is not the case, None is returned instead
         """
         pass
 
     @abstractmethod
-    def get_recipe_neighbors(self):
+    def is_recipe_url(self, url):
         """
-        Scrapes all 'recipe neighbors' on a page, e.g. scrapes recipes on non-recipe pages that the page points to.
-        For example, if a page links to multiple compilations, gets the recipes from those as direct recipe neighbors.
-        :return: Set of neighboring recipe URLs as string
+        :return: boolean true if the url represents a recipe page, false otherwise
+        """
+        pass
+
+    @abstractmethod
+    def get_neighbor_urls(self):
+        """
+        :return a list of urls that are from the same website (or group of websites for a general scraper)
         """
         pass
 

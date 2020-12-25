@@ -1,0 +1,35 @@
+
+.about-page-container {
+    background: white;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    align-content: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.about-logo {
+    width: 15%;
+}
+.about-logo-row {
+    display: flex;
+    justify-content: center;
+}
+.about-text {
+    font-family: Roboto-Medium, sans-serif;
+    color: white;
+    font-size: 30px;
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+
+.about-logo-container {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+
+}

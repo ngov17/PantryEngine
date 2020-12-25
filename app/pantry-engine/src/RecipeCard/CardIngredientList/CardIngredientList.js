@@ -1,18 +1,23 @@
 import React from "react";
 import './CardIngredientList.css';
+import ScrollView, { ScrollElement } from "./ScrollView";
 
 class CardIngredientList extends React.Component {
 
     getListOfIngredients = () => {
         return (
-            <div>
+        <ScrollView ref={scroller => this._scroller = scroller}>
+            <div className={'scroller'}>
             {
                 this.props.ingredients.map((item, index) => (
-                    <IngredientItem available={this.props.available} name={item}/>
+                    <ScrollElement>
+                        <IngredientItem available={this.props.available} name={item}/>
+                    </ScrollElement>
+
                 ))
             }
-                {console.log(this.props.ingredients)}
             </div>
+        </ScrollView>
 
         )
     }

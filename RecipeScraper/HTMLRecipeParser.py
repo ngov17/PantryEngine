@@ -36,15 +36,6 @@ class HTMLRecipeParser(ABC):
         pass
 
     @abstractmethod
-    def parse_url_host(self):
-        """
-        :return the URL host. This is important as its unique and will represent the website
-         id that represents each page for efficient parsing management if any changes occur
-        :REQUIRED
-        """
-        pass
-
-    @abstractmethod
     def parse_url(self):
         """
         :return the url from html
@@ -56,7 +47,7 @@ class HTMLRecipeParser(ABC):
     def parse_image_url(self):
         """
         :return the image url from html
-        : NOT REQUIRED ( a dummy image will be filled instead)
+        : NOT REQUIRED ( However if an image is not available, a dummy image will be filled instead)
         """
         pass
 
@@ -85,6 +76,22 @@ class HTMLRecipeParser(ABC):
         pass
 
     @abstractmethod
+    def parse_description(self):
+        """
+        :return description
+        :NOT REQUIRED
+        """
+        pass
+
+    @abstractmethod
+    def parse_total_time(self):
+        """
+        :return total time taken
+        :NOT REQUIRED (for copyright purposes)
+        """
+        pass
+
+    @abstractmethod
     def parse_agg_rating(self):
         """
         :return a float between 0 and 1 representing the rating (will be displayed in an interactive manner)
@@ -109,18 +116,26 @@ class HTMLRecipeParser(ABC):
         pass
 
     @abstractmethod
-    def parse_reviews(self):
+    def parse_keywords(self):
         """
-        :return a list of reviews for nlp analysis (sentiment analysis and ratings analysis)
-        NOT REQUIRED
+        :return keywords
+        :NOT REQUIRED
         """
         pass
 
     @abstractmethod
-    def parse_description(self):
+    def parse_recipe_cuisine(self):
         """
-        :return the shorthand description of the recipe as string
-        : NOT REQUIRED (try finding websites that have this, as it is really useful
-                        info for further nlp analysis)
+        :return cuisine
+        :NOT REQUIRED
         """
         pass
+
+    @abstractmethod
+    def parse_recipe_category(self):
+        """
+        :return category
+        :NOT REQUIRED
+        """
+        pass
+

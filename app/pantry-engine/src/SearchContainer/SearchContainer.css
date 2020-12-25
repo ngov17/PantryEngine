@@ -1,0 +1,16 @@
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:100vh;
+}
+
+.ingredients {
+    display: flex;
+    flex-direction: row;
+    background: rgba(255, 255, 255, 0.9);
+    width: 20%;
+    box-shadow:inset 2px 1px 3px rgba(0, 0, 0, 0.5);
+    padding-top: 10px;
+
+}

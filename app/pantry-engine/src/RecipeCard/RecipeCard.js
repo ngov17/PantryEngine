@@ -2,6 +2,7 @@ import * as React from "react";
 import './RecipeCard.css';
 import CardIngredientList from "./CardIngredientList/CardIngredientList";
 
+
 class RecipeCard extends React.Component {
 
     handleClickCard = () => {
@@ -9,6 +10,9 @@ class RecipeCard extends React.Component {
     }
 
     render() {
+        let article = [{title: this.props.result.title, description: this.props.result.ingredients},
+            {title: "STEPS", description: this.props.result.steps}];
+        console.log(this.props.recipe_title)
         return(
             <div className={'recipe-item'}>
                 <div className={'recipe-card'} onClick={this.handleClickCard}>
@@ -34,5 +38,7 @@ class RecipeCard extends React.Component {
         )
     }
 }
+
+
 
 export default RecipeCard;

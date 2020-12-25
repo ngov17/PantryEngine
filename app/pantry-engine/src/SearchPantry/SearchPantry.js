@@ -6,7 +6,25 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from "react-bootstrap/Button";
 import './SearchPantry.css';
 import SearchContainer from "../SearchContainer/SearchContainer";
-import SearchTemplate from "../SearchTemplate/SearchTemplate";
+import {trackPromise, usePromiseTracker} from "react-promise-tracker";
+import Loader from 'react-loader-spinner';
+
+
+// This is the loading indicator that is displayed while the asynchronous fetch is executed
+const LoadingIndicator = (props) => {
+    const { promiseInProgress } = usePromiseTracker();
+
+    return (
+        <div>
+            {promiseInProgress === true &&
+            <div style={{ width: "100%", height: "100", display: "flex", justifyContent: "center", alignItems: "center"
+                 }}>
+
+            <Loader type="ThreeDots" color="#363636" height="100" width="100" />
+            </div>}
+        </div>
+    );
+}
 
 class SearchPantry extends React.Component {
 
@@ -20,13 +38,12 @@ class SearchPantry extends React.Component {
         }
     }
 
-
     callAPI(qry) {
         let url = "http://localhost:3001?q=" + qry
-        fetch(url)
+        trackPromise(fetch(url)
             .then(res => res.json())
-            .then(res => this.setState({result: res
-                }))
+            .then(res => this.setState({result: res, queried: true
+            })));
     }
 
     handleSubmit = (e) => {
@@ -53,19 +70,21 @@ class SearchPantry extends React.Component {
     }
 
     getContainerContents() {
-
-        if (this.state.queried) {
-            return (
-                <SearchContainer result={this.result}/>
-            )
-        } else {
-            return (
-                <>
-                    <SearchTemplate disabled={true} buttonClick={this.handleSubmit} value={'tomatoes, garlic, chicken, olives'}/>
-                    <SearchTemplate disabled={true} buttonClick={this.handleSubmit} value={'broccoli, asparagus, beef, chicken, a potato, toast'}/>
-                    <SearchTemplate disabled={true} buttonClick={this.handleSubmit} value={'flour, leftover rice, carrots'}/>
-                </>)
-        }
+        const indicator = <LoadingIndicator/>
+        return (
+            <div>
+                {this.indicator}
+                <SearchContainer queried={this.state.queried} result={this.state.result}/>
+            </div>
+        );
+        // else {
+        //     return (
+        //         <>
+        //             <SearchTemplate disabled={true} buttonClick={this.handleSubmit} value={'tomatoes, garlic, chicken, olives'}/>
+        //         //             <SearchTemplate disabled={true} buttonClick={this.handleSubmit} value={'broccoli, asparagus, beef, chicken, a potato, toast'}/>
+        //                    <SearchTemplate disabled={true} buttonClick={this.handleSubmit} value={'flour, leftover rice, carrots'}/>
+        //         </>)
+        // }
 
 
     }

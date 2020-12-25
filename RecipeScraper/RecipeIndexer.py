@@ -13,18 +13,18 @@ class RecipeIndexer:
 
     def __init__(self, html_parser_obj: HTMLRecipeParser):
         self.html_string = html_parser_obj.parse_html_string()
-        self.url_host = html_parser_obj.parse_url_host()
         self.url = html_parser_obj.parse_url()
         self.image_url = html_parser_obj.parse_image_url()
         self.title = html_parser_obj.parse_title()
         self.ingredients = html_parser_obj.parse_ingredients()
-        self.success = html_parser_obj.success
         self.steps = html_parser_obj.parse_steps()
-        self.desc = html_parser_obj.parse_description()
+        self.total_time = html_parser_obj.parse_total_time()
         self.rating = html_parser_obj.parse_agg_rating()
         self.nutrition_info = html_parser_obj.parse_nutrition_info()
         self.author_name = html_parser_obj.parse_author_name()
-        self.reviews = html_parser_obj.parse_reviews()
+        self.keywords = html_parser_obj.parse_keywords()
+        self.recipe_category = html_parser_obj.parse_recipe_category()
+        self.recipe_cuisine = html_parser_obj.parse_recipe_cuisine()
 
         query = {
             "query": {
@@ -35,38 +35,37 @@ class RecipeIndexer:
                 }
             }
         }
-        # log for errors
-        print(self.success)
         result = self.es.search(query, "url_index")
         self.all_hits = result['hits']['hits']
         # call insert methods to populate the indices only if there are
         # no duplicates
-        if (len(self.all_hits) == 0) and self.success:
-            self.insert_url_index(self.url, self.url_host, self.html_string)
-            self.insert_recipe_index(self.url, self.image_url, self.title, self.ingredients, self.steps, self.desc,
-                                     self.rating, self.nutrition_info, self.author_name)
+        if len(self.all_hits) == 0:
+            self.insert_url_index(self.url, self.html_string)
+            self.insert_recipe_index(self.url, self.image_url, self.title, self.ingredients, self.steps, self.total_time,
+                                     self.rating, self.nutrition_info, self.author_name, self.keywords,
+                                     self.recipe_category, self.recipe_cuisine)
+            # variable that is True if recipe is successfully indexed
+            self.is_indexed = True
         else:
             if len(self.all_hits) > 0:
+                self.is_indexed = False
                 print("RECIPE ALREADY IN DATABASE. CRALWER MOVING ON")
-            else:
-                print("One or more fields are not parsable")
 
-    def insert_url_index(self, url: str, url_host: str, html_string: str):
+    def insert_url_index(self, url: str, html_string: str):
         """
-        :inserts url, url_host, html_string into url_index
+        :inserts url, html_string into url_index
         """
         # construct the json object that represents the document
         _doc_url = {
             "url": url,
-            "url_host": url_host,
             "html_string": html_string
         }
 
         # insert the document in the index and log if failed
         print(self.es.index("url_index", _doc_url))
 
-    def insert_recipe_index(self, url: str, image_url: str, title: str, ingredients: [str], steps: [str], desc: str,
-                            rating: int, nutrition_info: dict, author_name: str):
+    def insert_recipe_index(self, url: str, image_url: str, title: str, ingredients: [str], steps: [str], total_time: str,
+                            rating: int, nutrition_info: dict, author_name: str, keywords, recipe_category, recipe_cuisine:str):
         """
         :inserts url, recipe, and its ingredients into recipe_index
         """
@@ -76,10 +75,13 @@ class RecipeIndexer:
             "title": title,
             "ingredients": ingredients,
             "steps": steps,
-            "description": desc,
+            "total_time": total_time,
             "rating": rating,
             "nutrition_info": nutrition_info,
-            "author_name": author_name
+            "author_name": author_name,
+            "keywords": keywords,
+            "recipeCategory": recipe_category,
+            "recipeCuisine": recipe_cuisine
         }
 
         # insert the document in the index and log if failed
